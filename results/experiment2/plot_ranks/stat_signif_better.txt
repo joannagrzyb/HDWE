@@ -1,0 +1,69 @@
+Statistically significantly better for Specificity :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            0           1           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            1           1           0
+HDWE-HDDT           1           0            0            0           1           0
+HDWE-KNN            0           0            0            0           0           0
+HDWE-SVC            1           1            1            1           1           0
+
+Statistically significantly better for Recall :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            1            0           0           0
+HDWE-MLP            1           0            1            1           0           0
+HDWE-CART           0           0            0            0           0           0
+HDWE-HDDT           0           0            1            0           0           0
+HDWE-KNN            1           0            1            1           0           0
+HDWE-SVC            1           0            1            1           0           0
+
+Statistically significantly better for Precision :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            0           0           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            1           1           0
+HDWE-HDDT           1           0            0            0           1           0
+HDWE-KNN            1           0            0            0           0           0
+HDWE-SVC            1           0            1            1           1           0
+
+Statistically significantly better for F1 :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            0           0           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            0           0           0
+HDWE-HDDT           1           0            1            0           0           0
+HDWE-KNN            1           0            1            1           0           0
+HDWE-SVC            1           1            1            1           1           0
+
+Statistically significantly better for BAC :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            0           0           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            1           1           0
+HDWE-HDDT           1           0            0            0           1           0
+HDWE-KNN            0           0            0            0           0           0
+HDWE-SVC            1           1            1            1           1           0
+
+Statistically significantly better for G-mean1 :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            1           1           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            1           1           0
+HDWE-HDDT           0           0            0            0           1           0
+HDWE-KNN            0           0            0            0           0           0
+HDWE-SVC            1           1            1            1           1           0
+
+Statistically significantly better for G-mean2 :
+              HDWE-GNB    HDWE-MLP    HDWE-CART    HDWE-HDDT    HDWE-KNN    HDWE-SVC
+---------  ----------  ----------  -----------  -----------  ----------  ----------
+HDWE-GNB            0           0            0            0           0           0
+HDWE-MLP            1           0            1            1           1           0
+HDWE-CART           1           0            0            0           0           0
+HDWE-HDDT           1           0            1            0           0           0
+HDWE-KNN            1           0            1            1           0           0
+HDWE-SVC            1           1            1            1           1           0
