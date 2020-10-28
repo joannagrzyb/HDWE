@@ -52,8 +52,8 @@ clf_names = [
 
 # Loading of the real data stream
 streams = []                                                        # size   n_chunks
-streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    1000,    int(267000/1000)))
-streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      1000,    int(359999/1000)))
+streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    1500,    int(267000/1500)))
+streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      1500,    int(359999/1500)))
 
 
 metrics = [
