@@ -52,8 +52,8 @@ clf_names = [
 
 # Loading of the real data stream
 streams = []                                                        # size   n_chunks
-streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    1500,    int(267000/1500)))
-streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      1500,    int(359999/1500)))
+streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    2000,    int(267000/2000)))
+streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      2000,    int(359999/2000)))
 
 
 metrics = [
@@ -122,7 +122,7 @@ def compute(clf_name, clf, chunk_size, n_chunks, metric_names, metrics, streams,
         print(str(ex))
 
 # Multithread; n_jobs - number of threads, where -1 all threads, safe for my computer 2
-Parallel(n_jobs=-1)(
+Parallel(n_jobs=2)(
                 delayed(compute)
                 (clf_name, clf, chunk_size, n_chunks, metric_names, metrics, streams, stream_name)
                 for clf_name, clf in zip(clf_names, clfs)
