@@ -17,8 +17,10 @@ class HDDT(BaseEstimator, ClassifierMixin):
             https://github.com/kaurao/HDDT
     """
 
-    def __init__(self, C=2):
+    def __init__(self, C=9):
         # TODO: grid search - for the best C
+        # C=2 - for all
+        # C=9 - for real streams
         self.C = C
 
     def fit(self, X, y):
