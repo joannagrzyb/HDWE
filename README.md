@@ -1,6 +1,28 @@
 # Imbalanced data stream classification with the changing prior probabilities
 
-Master thesis implementation 
+Implementation 
+
+## Setup - experiment real data
+
+Comparison between HDWE method and selected state-of-the-art method with base classifiers SVC and HDDT. 
+
+### Data
+
+Number of data streams: 3
+
+- Poker data set
+- Cover type data set
+- Insects data set
+
+### Methods
+
+1. HDWE
+2. SEA
+3. AWE
+4. Learn++.CDS
+5. Learn++.NIE
+6. OUSE
+7. REA
 
 ## Setup - experiment 3a
 
