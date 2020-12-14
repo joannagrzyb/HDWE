@@ -4,8 +4,9 @@ import os
 
 # Loading of the real data stream
 streams = []                                                     # size   n_chunks
-streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    2000,    int(267000/2000)))
-streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      2000,    int(359999/2000)))
+# streams.append(("real-data/covtypeNorm-1-2vsAll-pruned.arff",    2000,    int(267000/2000)))
+# streams.append(("real-data/poker-lsn-1-2vsAll-pruned.arff",      2000,    int(359999/2000)))
+streams.append(("real-data/2vsA_INSECTS-abrupt_imbalanced_norm.arff",         2000,   int(355274/2000)))
 # stream_names = ["covtype", "poker"]
 
 # Copy these values from experiment, it has to be the same to correctly load files
@@ -46,7 +47,7 @@ metric_alias = [
 ]
 
 sigma = 5       # Parameter to gaussian filter
-n_streams = 2
+n_streams = 1
 
 n_chunks = []
 for stream in streams:
@@ -107,4 +108,8 @@ metric_ar = [
     "G-mean1",
 ]
 
+# If error:
+# ValueError: The number of FixedLocator locations (7), usually from a call to set_ticks, does not match the number of ticklabels (6).
+# Install old version of matplotlib:
+# pip install matplotlib==3.2.1
 plot_radars(clf_names, stream_names, metric_nar, clf_names, metric_ar)
