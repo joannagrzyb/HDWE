@@ -1,18 +1,18 @@
 import numpy as np
 from utils.plotting import plot, save_plot
 from utils.statistictest import calc_ranks, friedman_test
-import Orange
+# import Orange
 import os
 
 # Copy these values from experiment, it has to be the same to correctly load files
 clf_names = [
     "HDWE-HDDT",
-    "SEA-HDDT",
     "AWE-HDDT",
-    "LearnppCDS-HDDT",
     "LearnppNIE-HDDT",
-    "OUSE-HDDT",
+    "LearnppCDS-HDDT",
     "REA-HDDT",
+    "OUSE-HDDT",
+    "SEA-HDDT",
 ]
 metric_names = [
     "specificity",
@@ -83,18 +83,20 @@ for drift_id, drift in enumerate(drifts):
                 plotfilename_eps = "results/experiment3b/plots/gen/%s/%s/%s.eps" % (drift, metric_name, plot_name)
                 if not os.path.exists("results/experiment3b/plots/gen/%s/%s/" % (drift, metric_name)):
                     os.makedirs("results/experiment3b/plots/gen/%s/%s/" % (drift, metric_name))
-                for clf_id, clf_name in enumerate(clf_names):
+                clf_indexes = []
+                for clf_id, clf_name in reversed(list(enumerate(clf_names))):
                     try:
                         # Load data from file
                         filename = "results/experiment3b/metrics/gen/%s/%s/%s/%s.csv" % (drift, s_name, metric_name, clf_name)
                         plot_data = np.genfromtxt(filename, delimiter=',', dtype=np.float32)
                         # Plot metrics of each stream
-                        # plot_object = plot(plot_data, clf_name, sigma)
+                        plot_object = plot(plot_data, clf_name, clf_id, sigma)
 
                         # Save average of scores into mean_scores, 1 stream = 1 avg
                         scores = plot_data.copy()
                         mean_score = np.mean(scores)
                         mean_scores[metric_id, stream_id, clf_id] = mean_score
+                        clf_indexes.append(clf_id)
 
                     except IOError:
                         print("File", filename, "not found")
@@ -102,21 +104,23 @@ for drift_id, drift in enumerate(drifts):
                         # continue if file not found
 
                 # Save plots of metrics of each stream
-                # save_plot(plot_object, drift, metric_name, metric_a, n_chunks, plotfilename_png, plotfilename_eps)
+
+                # print()
+                save_plot(plot_object, drift, metric_name, metric_a, np.array(clf_names)[list(reversed(clf_indexes))], n_chunks, plotfilename_png, plotfilename_eps)
 
 # print("\nMean scores:\n", mean_scores)
 
-for metric_id, metric_a in enumerate(metric_alias):
-    ranks, mean_ranks = calc_ranks(mean_scores, metric_id)
-    critical_difference = Orange.evaluation.compute_CD(mean_ranks, n_streams, test='nemenyi')
-    
-    # Friedman test, implementation from Demsar2006
-    print("\n", metric_a)
-    friedman_test(clf_names, mean_ranks, n_streams, critical_difference)
-
-    # CD diagrams to compare base classfiers with each other based on Nemenyi test (post-hoc)
-    fnames = [('results/experiment3b/plot_ranks/cd_%s.png' % metric_a), ('results/experiment3b/plot_ranks/cd_%s.eps' % metric_a)]
-    if not os.path.exists('results/experiment3b/plot_ranks/'):
-        os.makedirs('results/experiment3b/plot_ranks/')
-    for fname in fnames:
-        Orange.evaluation.graph_ranks(mean_ranks, clf_names, cd=critical_difference, width=6, textspace=1.5, filename=fname)
+# for metric_id, metric_a in enumerate(metric_alias):
+#     ranks, mean_ranks = calc_ranks(mean_scores, metric_id)
+#     critical_difference = Orange.evaluation.compute_CD(mean_ranks, n_streams, test='nemenyi')
+#
+#     # Friedman test, implementation from Demsar2006
+#     print("\n", metric_a)
+#     friedman_test(clf_names, mean_ranks, n_streams, critical_difference)
+#
+#     # CD diagrams to compare base classfiers with each other based on Nemenyi test (post-hoc)
+#     fnames = [('results/experiment3b/plot_ranks/cd_%s.png' % metric_a), ('results/experiment3b/plot_ranks/cd_%s.eps' % metric_a)]
+#     if not os.path.exists('results/experiment3b/plot_ranks/'):
+#         os.makedirs('results/experiment3b/plot_ranks/')
+#     for fname in fnames:
+#         Orange.evaluation.graph_ranks(mean_ranks, clf_names, cd=critical_difference, width=6, textspace=1.5, filename=fname)

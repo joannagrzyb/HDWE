@@ -5,15 +5,27 @@ import numpy as np
 from matplotlib import rcdefaults
 from math import pi
 
+
 # Plot figure: x - chunk number, y - quality (one of metrics)
-def plot(plot_data, clf_name, sigma=2):
+def plot(plot_data, clf_name, idx, sigma=2):
     if sigma > 0:
             plot_data = gaussian_filter1d(plot_data, sigma)
-    plt.plot(range(len(plot_data)), plot_data, label=clf_name)
+
+    styles = ['-', '--', '--', '--', '--', '--', '--', '--']
+    colors = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:brown', 'tab:gray']
+    widths = [1.5, 1, 1, 1, 1, 1, 1, 1, 1]
+
+    # styles = ['-', '-', '-', '-', '-', '-', '-', '-']
+    # colors = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:brown', 'tab:gray']
+    # widths = [1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+    plt.plot(range(len(plot_data)), plot_data, label=clf_name, linestyle=styles[idx], color=colors[idx], linewidth=widths[idx])
+    # plt.plot(range(len(plot_data)), plot_data, label=clf_name)
     return plt
 
+
 # Save plot to the file png and eps of quality created above
-def save_plot(plot, drift, metric_name, metric_alias, n_chunks, plotfilename_png, plotfilename_eps):
+def save_plot(plot, drift, metric_name, metric_alias, clf_names, n_chunks, plotfilename_png, plotfilename_eps):
     if not os.path.exists("results/experiment2/plots/gen/%s/%s/" % (drift, metric_name)):
         os.makedirs("results/experiment2/plots/gen/%s/%s/" % (drift, metric_name))
 
@@ -28,7 +40,11 @@ def save_plot(plot, drift, metric_name, metric_alias, n_chunks, plotfilename_png
     plt.rc('legend', fontsize=MEDIUM_SIZE)   # legend fontsize
     plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
-    plt.legend(framealpha=1)
+    plt.legend()
+    plt.legend(reversed(plt.legend().legendHandles), clf_names, framealpha=1)
+    plt.grid(True, color="silver", linestyle=":")
+
+    # plt.legend(framealpha=1)
     plt.ylabel(metric_alias)
     plt.xlabel("Data chunk")
     plt.axis([0, n_chunks, 0, 1])
@@ -38,6 +54,7 @@ def save_plot(plot, drift, metric_name, metric_alias, n_chunks, plotfilename_png
     # plt.show()
     plt.clf()  # Clear the current figure
     plt.close()
+
 
 # Prepared only for real data
 def plot_radars(methods, streams, metrics, methods_alias=None, metrics_alias=None):
@@ -67,9 +84,9 @@ def plot_radars(methods, streams, metrics, methods_alias=None, metrics_alias=Non
 
     for stream_name in streams:
 
-        colors = ['xkcd:grey', 'xkcd:burgundy', 'xkcd:dark green', 'xkcd:salmon', 'xkcd:brick', 'xkcd:gold', 'xkcd:navy']
-        ls = ["--", "--", "--", "--", "--", "--", "-"]
-        lw = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 1.2]
+        ls = ['-', '--', '--', '--', '--', '--', '--', '--']
+        lw = [1, .5, .5, .5, .5, .5, .5, .5, .5]
+        colors = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red', 'tab:purple', 'tab:brown', 'tab:gray']
 
         # Angle of each axis in the plot - divide the plot / number of variable
         angles = [n / float(N) * 2 * pi for n in range(N)]
@@ -88,7 +105,7 @@ def plot_radars(methods, streams, metrics, methods_alias=None, metrics_alias=Non
         # Draw one axe per variable + add labels labels yet
         plt.xticks(angles, metrics_alias)
 
-        for i, (clf_name, method_a) in enumerate(zip(methods, methods_alias)):
+        for i, (clf_name, method_a) in reversed(list(enumerate(zip(methods, methods_alias)))):
             plot_data = []
             for metric in metrics:
                 if data[stream_name, clf_name, metric] is None:
@@ -100,7 +117,10 @@ def plot_radars(methods, streams, metrics, methods_alias=None, metrics_alias=Non
             ax.plot(angles, plot_data, label=method_a, c=colors[i], ls=ls[i], lw=lw[i])
 
         # Add legend
+        plt.legend()
         plt.legend(
+            reversed(plt.legend().legendHandles),
+            methods_alias,
             loc="lower center",
             ncol=2,
             columnspacing=1,
